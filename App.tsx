@@ -3,9 +3,13 @@
  * https://github.com/facebook/react-native
  *
  * @format
- */
+ */import {
+  NavigationContainer,
+  useNavigationContainerRef,
+} from '@react-navigation/native';
 
-import React from 'react';
+
+import React, {useRef}from 'react';
 import type {PropsWithChildren} from 'react';
 import {
   SafeAreaView,
@@ -16,6 +20,7 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import {
   Colors,
@@ -24,10 +29,13 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import TabOneScreen from './src/index';
+import TweetDetails from './src/components/TweetDetails';
 
 type SectionProps = PropsWithChildren<{
   title: string;
 }>;
+const Stack = createStackNavigator();
 
 function Section({children, title}: SectionProps): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
@@ -57,42 +65,25 @@ function Section({children, title}: SectionProps): React.JSX.Element {
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
+  const navigationRef = useNavigationContainerRef(); // You can also use a regular ref with `React.useRef()`
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <NavigationContainer>
+       <Stack.Navigator>
+                <Stack.Screen
+                    name="Home"
+                    component={TabOneScreen}
+                    options={{ title: 'Welcome' }}
+                />
+                <Stack.Screen name="TweetDetails" component={TweetDetails} options={{
+                    title: 'Tweet Details'
+                }} />
+            </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
