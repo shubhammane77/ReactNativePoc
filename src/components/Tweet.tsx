@@ -1,18 +1,18 @@
 import { View, Text, StyleSheet, Image } from 'react-native';
 const Tweet = ({ tweet, navigation }) => {
+    console.log(tweet.user?.image);
     return (
         <View style={styles.container}>
-            <Image src={tweet.user?.image} style={styles.userImage}></Image>
+            <Image source={{uri: tweet.user?.image}} style={{height:50, width:50}}></Image>
             <View style={styles.mainContainer}>
                 <Text style={styles.userName}>{tweet.user.username}</Text>
                 <Text style={styles.tweet} onPress={() =>
                     navigation.navigate('TweetDetails', { tweet: tweet })
                 }>{tweet.content}</Text>
-                {tweet.image && <Image src={tweet.image} style={styles.tweetImage} />}
+                {tweet.image && <Image  style={styles.tweetImage} source={{uri: tweet.image}} />}
             </View>
         </View>
     )
-
 }
 
 const styles = StyleSheet.create({
@@ -21,7 +21,6 @@ const styles = StyleSheet.create({
         borderBottomWidth: StyleSheet.hairlineWidth,
         borderColor: 'lightgrey',
         padding: 10,
-        backgroundColor:'black'
     },
     userImage: {
         width: 50,
@@ -33,7 +32,7 @@ const styles = StyleSheet.create({
         flex: 1
     },
     tweetImage: {
-        aspectRatio: 16 / 9,
+        aspectRatio: 10 / 4,
         padding: 10
     },
     tweet: {

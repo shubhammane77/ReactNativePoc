@@ -1,14 +1,13 @@
 import { View, Text, StyleSheet, Image } from 'react-native';
-
 const TweetDetails = ({ route }) => {
     var { tweet } = route.params;
     return (
         <View style={styles.container} >
-            <Image src={tweet.user?.image} style={styles.userImage}></Image>
+            <Image source={{uri: tweet.user?.image}} style={styles.userImage}></Image>
             <View style={styles.mainContainer}>
                 <Text style={styles.userName}>{tweet.user.username}</Text>
                 <Text style={styles.tweet} >{tweet.content}</Text>
-                {tweet.image && <Image src={tweet.image} style={styles.tweetImage} />}
+                {tweet.image && <Image source={{uri: tweet.image}} style={styles.tweetImage} />}
             </View>
         </View>
     )
@@ -20,7 +19,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         borderBottomWidth: StyleSheet.hairlineWidth,
         borderColor: 'lightgrey',
-        backgroundColor: 'black',
         padding: 10
     },
     userImage: {
